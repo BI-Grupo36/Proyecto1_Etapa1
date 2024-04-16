@@ -13,3 +13,6 @@ keras
 tensorflow
 mlxtend
 langdetect
+google-cloud-translate
+fastapi
+uvicorn[standard]
