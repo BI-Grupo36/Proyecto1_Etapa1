@@ -1,6 +1,7 @@
 from datetime import datetime
 import unicodedata
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing import Counter, Optional
 import pandas as pd
@@ -17,21 +18,7 @@ from nltk.stem import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from fastapi import HTTPException
 from preprocessing import final_preprocessor
-"""
-    Functions needed for the preprocessing of the data in the pipeline
-"""
 
-"""
-    Endpoint configuration
-"""
-class ReviewClassifier:
-    def __init__(self):
-        self.model = joblib.load(os.path.dirname(__file__) + '/../LinearSvmModel.joblib')
-        print("Model loaded successfully")
-    def predict(self, review):
-        return self.model.predict(review)
-
-review_classifier = ReviewClassifier()
 
 app = FastAPI(
     description="This API provides a straightforward solution for categorizing reviews into five distinct categories, each representing the score attributed to a particular hotel. ",
@@ -58,6 +45,11 @@ class ReviewsRequest(BaseModel):
     reviews: list
     file: Optional[str]  
 
+@app.get("/")
+def root() -> RedirectResponse:
+    return RedirectResponse(url="/docs")
+
+    
 @app.post("/reviews/")
 async def classifyMultipleTexts(review_data: ReviewsRequest):
     try:

@@ -18,6 +18,7 @@ def data_cleaning(text):
     text = re.sub('[\W]+', ' ', text) + ' '.join(emoticons).replace('-', '')
     
     return text.split()
+
 def remove_stopwords(text):
     stop = stopwords.words('spanish')
     tokenized = [w for w in text if w not in stop]
@@ -59,3 +60,13 @@ def final_preprocessor(data):
     X_v = tfidf_vectorizer.fit_transform(X_str)
 
     return X_v
+
+
+class ReviewClassifier:
+    def __init__(self):
+        self.model = joblib.load(os.path.dirname(__file__) + '/../LinearSvmModel.joblib')
+        
+    def predict(self, review):
+        return self.model.predict(review)
+
+review_classifier = ReviewClassifier()
