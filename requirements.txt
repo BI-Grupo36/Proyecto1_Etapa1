@@ -5,7 +5,6 @@ openpyxl
 ipywidgets==8.1.2
 plotly
 scikit-learn
-kaggle
 ipykernel
 imbalanced-learn
 nltk
@@ -13,6 +12,6 @@ keras
 tensorflow
 mlxtend
 langdetect
-google-cloud-translate
 fastapi
 uvicorn[standard]
+sqlalchemy
